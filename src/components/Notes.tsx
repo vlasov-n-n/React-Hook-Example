@@ -1,21 +1,25 @@
-import React from 'react';
-import { INote } from '../types/INote';
+import React, { useContext } from 'react';
+import { FirebaseContext } from '../context/firebase/FirebaseContext';
 
-interface IProps {
-  notes: Array<INote>;
-}
+const Notes: React.FC = () => {
+  const { firebaseState, deleteNote } = useContext(FirebaseContext);
 
-const Notes: React.FC<IProps> = ({ notes }) => {
   return (
     <ul className="list-group">
       {
-        notes.map(note =>
+        firebaseState.notes.map(note =>
           <li key={note.id} className="list-group-item note">
             <div>
               <strong>{ note.title }</strong>
               <small>{ new Date().toLocaleDateString() }</small>
             </div>
-            <button type="button" className="btn btn-outline-danger btn-sm">&times;</button>
+            <button
+              onClick={() => deleteNote(note.id)}
+              type="button"
+              className="btn btn-outline-danger btn-sm"
+            >
+              &times;
+            </button>
           </li>)
       }
     </ul>

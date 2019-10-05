@@ -1,16 +1,11 @@
 import * as React from 'react';
 
-import * as ActionTypes from '../../types/IAlertAction';
+import * as ActionTypes from '../ContextActionTypes';
 import { IAppActions } from '../../types/IAppActions';
-
-export interface IAlertState {
-  visible?: boolean;
-  message?: string;
-  type?: string;
-}
+import { IAlertState } from './IAlertContext';
 
 /** @description Alert reducer */
-export const AlertReducer: React.Reducer<IAlertState, IAppActions> = (state, action) => {
+export const AlertReducer: React.Reducer<IAlertState, IAppActions> = (state, action):IAlertState => {
   switch (action.type) {
     case ActionTypes.SHOW_ALERT:
       return {

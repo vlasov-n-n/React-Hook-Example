@@ -5,22 +5,25 @@ import Home from './pages/Home';
 import About from './pages/About';
 import NavBar from './components/NavBar';
 import Alert from './components/Alert';
-import { AlertState } from './context/alert/AlertState';
+import { AlertProvider } from './context/alert/AlertProvider';
+import { FirebaseProvider } from './context/firebase/FirebaseProvider';
 
 const App: React.FC = () => {
   return (
-    <AlertState>
-      <BrowserRouter>
-        <NavBar/>
-        <div className="container pt-4">
-          <Alert/>
-          <Switch>
-            <Route path="/" exact component={Home}/>
-            <Route path="/about" component={About}/>
-          </Switch>
-        </div>
-      </BrowserRouter>
-    </AlertState>
+    <FirebaseProvider>
+      <AlertProvider>
+        <BrowserRouter>
+          <NavBar/>
+          <div className="container pt-4">
+            <Alert/>
+            <Switch>
+              <Route path="/" exact component={Home}/>
+              <Route path="/about" component={About}/>
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </AlertProvider>
+    </FirebaseProvider>
   );
 };
 
