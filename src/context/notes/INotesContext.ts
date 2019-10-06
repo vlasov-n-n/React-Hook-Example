@@ -1,13 +1,14 @@
 import { INote } from '../../types/INote';
 
-export interface IFirebaseState {
+export interface INotesState {
   notes: Array<any>;
   loading: boolean;
 }
 
-export interface IFirebaseContext {
-  firebaseState: IFirebaseState;
-  createNote: (note: INote) => void,
+export interface INotesContext {
+  notesState: INotesState;
+  createNote: (title: string) => void,
   updateNote: (note: INote) => void,
   deleteNote: (id: number) => void,
+  fetchNotes: () => void;
 }

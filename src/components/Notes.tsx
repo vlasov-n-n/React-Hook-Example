@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { FirebaseContext } from '../context/firebase/FirebaseContext';
+import { NotesContext } from '../context/notes/NotesContext';
 
 const Notes: React.FC = () => {
-  const { firebaseState, deleteNote } = useContext(FirebaseContext);
+  const { firebaseState, deleteNote } = useContext(NotesContext);
 
   return (
     <ul className="list-group">

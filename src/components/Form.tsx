@@ -1,14 +1,14 @@
 import React, {useContext, useState} from 'react';
 
 import { AlertContext } from '../context/alert/AlertContext';
-import { FirebaseContext } from '../context/firebase/FirebaseContext';
+import { NotesContext } from '../context/notes/NotesContext';
 
 interface IProps {}
 
 const Form: React.FC<IProps> = () => {
   const [value, setValue] = useState('');
   const { show } = useContext(AlertContext);
-  const { createNote } = useContext(FirebaseContext);
+  const { createNote } = useContext(NotesContext);
 
   const submitHandler = (event: any) => {
     event.preventDefault();
@@ -16,10 +16,7 @@ const Form: React.FC<IProps> = () => {
     if(value.trim()) {
       show('Task created!', 'success');
       setValue('');
-      createNote({
-        id: NaN,
-        title: value,
-      })
+      createNote(value)
     } else {
       show('Tasks description is empty!');
     }

@@ -6,11 +6,11 @@ import About from './pages/About';
 import NavBar from './components/NavBar';
 import Alert from './components/Alert';
 import { AlertProvider } from './context/alert/AlertProvider';
-import { FirebaseProvider } from './context/firebase/FirebaseProvider';
+import { NotesProvider } from './context/notes/NotesProvider';
 
 const App: React.FC = () => {
   return (
-    <FirebaseProvider>
+    <NotesProvider>
       <AlertProvider>
         <BrowserRouter>
           <NavBar/>
@@ -23,7 +23,7 @@ const App: React.FC = () => {
           </div>
         </BrowserRouter>
       </AlertProvider>
-    </FirebaseProvider>
+    </NotesProvider>
   );
 };
 

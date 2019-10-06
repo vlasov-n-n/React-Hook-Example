@@ -2,24 +2,36 @@ import React from 'react';
 
 import * as ActionTypes from '../ContextActionTypes';
 import { IAppActions } from '../../types/IAppActions';
-import { IFirebaseState } from './IFirebaseContext';
+import { INotesState } from './INotesContext';
 import { INote } from '../../types/INote';
 
 /** @description Alert reducer */
-export const FirebaseReducer: React.Reducer<IFirebaseState, IAppActions> = (state, action):IFirebaseState => {
+export const NotesReducer: React.Reducer<INotesState, IAppActions> = (state, action):INotesState => {
   switch (action.type) {
-    case ActionTypes.CREATE_NOTE:
-    case ActionTypes.UPDATE_NOTE:
+    case ActionTypes.SHOW_LOADER:
       return {
         ...state,
         loading: true,
+      };
+
+    case ActionTypes.CREATE_NOTE:
+      return {
+        ...state,
+        loading: false,
+        notes: [...state.notes, action.payload.createdNote]
+      };
+
+    case ActionTypes.UPDATE_NOTE:
+      return {
+        ...state,
+        loading: false,
         notes: [...state.notes, action.payload.note]
       };
 
     case ActionTypes.DELETE_NOTE:
       return {
         ...state,
-        loading: true,
+        loading: false,
         notes: [...state.notes.filter((note: INote) => note.id !== action.payload.id)]
       };
 

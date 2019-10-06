@@ -1,4 +1,4 @@
 import { IAlertActions } from '../context/alert/IAlertActions';
-import { IFirebaseActions } from '../context/firebase/IFirebaseActions';
+import { INotesActions } from '../context/notes/INotesActions';
 
-export type IAppActions = IAlertActions | IFirebaseActions
+export type IAppActions = IAlertActions | INotesActions
