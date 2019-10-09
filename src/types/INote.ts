@@ -1,5 +1,6 @@
 export interface INote {
-  id: number;
+  id: string;
   title: string;
-  isActive: boolean;
+  active: boolean;
+  date: any;
 }

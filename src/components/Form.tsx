@@ -5,18 +5,17 @@ import { NotesContext } from '../context/notes/NotesContext';
 
 const Form: React.FC = () => {
   const [value, setValue] = useState('');
-  const { show } = useContext(AlertContext);
-  const { createNote } = useContext(NotesContext);
+  const Alert = useContext(AlertContext);
+  const Note = useContext(NotesContext);
 
   const submitHandler = (event: any) => {
     event.preventDefault();
 
     if(value.trim()) {
-      createNote(value);
+      Note.createNote(value);
       setValue('');
-      show('Task created!', 'success');
     } else {
-      show('Tasks description is empty!', 'danger');
+      Alert.show('Tasks description is empty!', 'danger');
     }
   };
 

@@ -10,8 +10,8 @@ import { NotesProvider } from './context/notes/NotesProvider';
 
 const App: React.FC = () => {
   return (
-    <NotesProvider>
-      <AlertProvider>
+    <AlertProvider>
+      <NotesProvider>
         <BrowserRouter>
           <NavBar/>
           <div className="container pt-4">
@@ -22,8 +22,8 @@ const App: React.FC = () => {
             </Switch>
           </div>
         </BrowserRouter>
-      </AlertProvider>
-    </NotesProvider>
+      </NotesProvider>
+    </AlertProvider>
   );
 };
 

@@ -14,6 +14,12 @@ export const NotesReducer: React.Reducer<INotesState, IAppActions> = (state, act
         loading: true,
       };
 
+    case ActionTypes.HIDE_LOADER:
+      return {
+        ...state,
+        loading: false,
+      };
+
     case ActionTypes.CREATE_NOTE:
       return {
         ...state,
@@ -33,6 +39,13 @@ export const NotesReducer: React.Reducer<INotesState, IAppActions> = (state, act
         ...state,
         loading: false,
         notes: [...state.notes.filter((note: INote) => note.id !== action.payload.id)]
+      };
+
+    case ActionTypes.FETCH_NOTES:
+      return {
+        ...state,
+        notes: action.payload.notes,
+        loading: false,
       };
 
     default:

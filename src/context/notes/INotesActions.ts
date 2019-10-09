@@ -18,7 +18,7 @@ export interface IUpdateNote {
 export interface IDeleteNote {
   type: typeof ActionTypes.DELETE_NOTE;
   payload: {
-    id: number;
+    id: string;
   };
 }
 
@@ -30,7 +30,11 @@ export interface IFetchNotes {
 }
 
 export interface IShowLoader {
-  type: typeof ActionTypes.SHOW_LOADER
+  type: typeof ActionTypes.SHOW_LOADER;
+}
+
+export interface IHideLoader {
+  type: typeof ActionTypes.HIDE_LOADER;
 }
 
 export type INotesActions =
@@ -39,3 +43,4 @@ export type INotesActions =
   | IDeleteNote
   | IFetchNotes
   | IShowLoader
+  | IHideLoader

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useContext, useReducer } from 'react';
 import axios from 'axios';
 
 import * as ActionTypes from '../ContextActionTypes';
@@ -7,7 +7,7 @@ import { NotesReducer } from './NotesReducer';
 import { IAppActions } from '../../types/IAppActions';
 import { INotesState } from './INotesContext';
 import { INote } from '../../types/INote';
-import { throws } from 'assert';
+import { AlertContext } from '../alert/AlertContext';
 
 const url: string = `${process.env.REACT_APP_DB_URL}` || '';
 
@@ -15,12 +15,20 @@ export const NotesProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer<React.Reducer<INotesState, IAppActions>>(
     NotesReducer, NotesInitialState
   );
+  const Alert = useContext(AlertContext);
 
   /** @description Show loader */
   const showLoader = () => {
     dispatch({
       type: ActionTypes.SHOW_LOADER,
     })
+  };
+
+  /** @description Hide loader */
+  const hideLoader = () => {
+    dispatch({
+      type: ActionTypes.HIDE_LOADER
+    });
   };
 
   /** @description Create note */
@@ -33,16 +41,23 @@ export const NotesProvider: React.FC = ({ children }) => {
       active: true,
     };
 
-    const createdNote: INote = await axios
-      .post(`${url}/notes.json1`, newNote)
-      .then(res => res.data);
-
-    dispatch({
-      type: ActionTypes.CREATE_NOTE,
-      payload: {
-        createdNote,
-      },
-    })
+    await axios
+      .post(`${url}/notes.json`, newNote)
+      .then(res => {
+        dispatch({
+          type: ActionTypes.CREATE_NOTE,
+          payload: {
+            createdNote: {
+              ...newNote,
+              id: res.data.name,
+            }
+          },
+        })
+      })
+      .catch(() => {
+        Alert.show('Error', 'danger');
+        hideLoader();
+      });
   };
 
   /** @description Update note */
@@ -58,35 +73,54 @@ export const NotesProvider: React.FC = ({ children }) => {
   };
 
   /** @description Delete note */
-  const deleteNote = async (id: number) => {
+  const deleteNote = async (id: string) => {
     showLoader();
 
-    await axios.delete(`${url}/notes/${id}.json`);
-
-    dispatch({
-      type: ActionTypes.DELETE_NOTE,
-      payload: {
-        id,
-      },
-    })
+    await axios.delete(`${url}/notes/${id}.json`)
+      .then(() => {
+        dispatch({
+          type: ActionTypes.DELETE_NOTE,
+          payload: {
+            id,
+          },
+        })
+      })
+      .catch(() => {
+        Alert.show('Error', 'danger');
+        hideLoader();
+      });
   };
 
   /** @description Fetch all notes */
   const fetchNotes = async () => {
     showLoader();
 
-    const notes: Array<INote> = await axios
+    await axios
       .get(`${url}/notes.json`)
       .then(res => {
-        return res.data
-      });
+        const result: Array<INote> = [];
 
-    dispatch({
-      type: ActionTypes.FETCH_NOTES,
-      payload: {
-        notes: notes || [],
-      },
-    })
+        for(let noteId in res.data) {
+          if(res.data.hasOwnProperty(noteId)) {
+            result.push({
+              ...res.data[noteId],
+              id: noteId
+            })
+          }
+        }
+
+        dispatch({
+          type: ActionTypes.FETCH_NOTES,
+          payload: {
+            notes: result || [],
+          },
+        })
+      })
+      .catch(() => {
+        Alert.show('Error', 'danger');
+        hideLoader();
+      })
+    ;
   };
 
   return (
