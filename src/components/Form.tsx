@@ -3,9 +3,7 @@ import React, {useContext, useState} from 'react';
 import { AlertContext } from '../context/alert/AlertContext';
 import { NotesContext } from '../context/notes/NotesContext';
 
-interface IProps {}
-
-const Form: React.FC<IProps> = () => {
+const Form: React.FC = () => {
   const [value, setValue] = useState('');
   const { show } = useContext(AlertContext);
   const { createNote } = useContext(NotesContext);
@@ -14,11 +12,11 @@ const Form: React.FC<IProps> = () => {
     event.preventDefault();
 
     if(value.trim()) {
-      show('Task created!', 'success');
+      createNote(value);
       setValue('');
-      createNote(value)
+      show('Task created!', 'success');
     } else {
-      show('Tasks description is empty!');
+      show('Tasks description is empty!', 'danger');
     }
   };
 

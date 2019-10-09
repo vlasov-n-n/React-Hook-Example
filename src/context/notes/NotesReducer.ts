@@ -5,7 +5,7 @@ import { IAppActions } from '../../types/IAppActions';
 import { INotesState } from './INotesContext';
 import { INote } from '../../types/INote';
 
-/** @description Alert reducer */
+/** @description Notes reducer */
 export const NotesReducer: React.Reducer<INotesState, IAppActions> = (state, action):INotesState => {
   switch (action.type) {
     case ActionTypes.SHOW_LOADER:

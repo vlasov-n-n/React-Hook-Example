@@ -7,6 +7,7 @@ import { NotesReducer } from './NotesReducer';
 import { IAppActions } from '../../types/IAppActions';
 import { INotesState } from './INotesContext';
 import { INote } from '../../types/INote';
+import { throws } from 'assert';
 
 const url: string = `${process.env.REACT_APP_DB_URL}` || '';
 
@@ -29,10 +30,11 @@ export const NotesProvider: React.FC = ({ children }) => {
     const newNote = {
       title,
       date: new Date().toJSON(),
+      active: true,
     };
 
     const createdNote: INote = await axios
-      .post(`${url}/notes.json`, newNote)
+      .post(`${url}/notes.json1`, newNote)
       .then(res => res.data);
 
     dispatch({
@@ -75,12 +77,14 @@ export const NotesProvider: React.FC = ({ children }) => {
 
     const notes: Array<INote> = await axios
       .get(`${url}/notes.json`)
-      .then(res => res.data);
+      .then(res => {
+        return res.data
+      });
 
     dispatch({
       type: ActionTypes.FETCH_NOTES,
       payload: {
-        notes,
+        notes: notes || [],
       },
     })
   };

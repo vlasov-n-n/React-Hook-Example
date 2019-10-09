@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import { NotesContext } from '../context/notes/NotesContext';
 
 const Notes: React.FC = () => {
-  const { firebaseState, deleteNote } = useContext(NotesContext);
+  const { notesState, deleteNote } = useContext(NotesContext);
 
   return (
     <ul className="list-group">
       {
-        firebaseState.notes.map(note =>
+        notesState.notes.map(note =>
           <li key={note.id} className="list-group-item note">
             <div>
               <strong>{ note.title }</strong>
@@ -20,7 +20,8 @@ const Notes: React.FC = () => {
             >
               &times;
             </button>
-          </li>)
+          </li>
+        )
       }
     </ul>
   )

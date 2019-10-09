@@ -1,9 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-interface IProps {}
-
-const NavBar: React.FC<IProps> = (props) => (
+const NavBar: React.FC = () => (
   <nav className="navbar navbar-dark navbar-expand-lg bg-primary">
     <div className="navbar-brand">
       Note App
