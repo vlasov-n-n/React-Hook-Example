@@ -98,21 +98,19 @@ export const NotesProvider: React.FC = ({ children }) => {
     await axios
       .get(`${url}/notes.json`)
       .then(res => {
-        const result: Array<INote> = [];
-
-        for(let noteId in res.data) {
-          if(res.data.hasOwnProperty(noteId)) {
-            result.push({
-              ...res.data[noteId],
-              id: noteId
-            })
-          }
-        }
+        const result: Array<INote> = res.data
+          ? Object.keys(res.data).map((key: string) => {
+            return {
+              ...res.data[key],
+              id: key
+            }
+          })
+          : [];
 
         dispatch({
           type: ActionTypes.FETCH_NOTES,
           payload: {
-            notes: result || [],
+            notes: result,
           },
         })
       })

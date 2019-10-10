@@ -11,7 +11,7 @@ const Notes: React.FC = () => {
           <li key={note.id} className="list-group-item note">
             <div>
               <strong>{ note.title }</strong>
-              <small>{ new Date().toLocaleDateString() }</small>
+              <small>{ note.date }</small>
             </div>
             <button
               onClick={() => Notes.deleteNote(note.id)}
